@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delicias | Cocina Saludable</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --text-color: #f8fafc;
+            --accent-color: #22c55e;
+            --card-bg: #1e293b;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        header {
+            width: 100%;
+            padding: 2rem;
+            text-align: center;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .hero {
+            margin-top: 4rem;
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+            padding: 0 1rem;
+        }
+
+        h1 { font-size: 3.5rem; margin-bottom: 0.5rem; }
+        p { color: #94a3b8; margin-bottom: 2.5rem; font-size: 1.1rem; }
+
+        .search-container {
+            background: var(--card-bg);
+            padding: 0.5rem;
+            border-radius: 12px;
+            display: flex;
+            gap: 10px;
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.3);
+            border: 1px solid #334155;
+            transition: border 0.3s ease;
+        }
+
+        .search-container:focus-within {
+            border-color: var(--accent-color);
+        }
+
+        input {
+            flex-grow: 1;
+            background: transparent;
+            border: none;
+            color: white;
+            padding: 0.8rem 1rem;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        button {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        button:hover { opacity: 0.9; }
+
+        .features {
+            margin-top: 6rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            width: 80%;
+            max-width: 1000px;
+            padding-bottom: 4rem;
+        }
+
+        .card {
+            padding: 1.5rem;
+            border-left: 2px solid var(--accent-color);
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 0 8px 8px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        DELICIAS
+    </header>
+
+    <main class="hero">
+        <h1>Tu cocina consciente.</h1>
+        <p>Explora recetas saludables, simples y llenas de sabor.</p>
+        
+        <div class="search-container">
+            <input type="text" placeholder="¿Qué se te antoja hoy?">
+            <button>Buscar</button>
+        </div>
+    </main>
+
+    <section class="features">
+        <div class="card">
+            <h3>Nutrición</h3>
+            <p>Balance exacto para mantener tu energía durante todo el día.</p>
+        </div>
+        <div class="card">
+            <h3>Agilidad</h3>
+            <p>Recetas diseñadas para optimizar tu tiempo en la cocina.</p>
+        </div>
+        <div class="card">
+            <h3>Calidad</h3>
+            <p>Enfoque en ingredientes frescos y procesos naturales.</p>
+        </div>
+    </section>
+
+</body>
+</html>
