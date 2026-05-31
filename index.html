@@ -4,54 +4,512 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍲</text></svg>">
-    <title>Delicias | Cocina Saludable</title>
+    <title>Delicias | Buscador de Recetas Inteligente</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+
     <style>
         :root {
-            --bg-cream: #FAF9F6;
-            --text-dark: #1f1f1f;
-            --btn-orange: #E85F33;
-            --white: #ffffff;
+            --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+            --accent-glow: radial-gradient(circle at 50% -20%, rgba(232, 95, 51, 0.15), transparent 50%);
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --brand-orange: #E85F33;
+            --brand-orange-hover: #d1502a;
+            --glass-white: rgba(255, 255, 255, 0.75);
+            --glass-border: rgba(255, 255, 255, 0.6);
+            --card-shadow: 0 20px 40px -15px rgba(15, 23, 42, 0.05);
         }
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: var(--bg-cream); color: var(--text-dark); margin: 0; }
-        
-        header { display: flex; justify-content: space-between; align-items: center; padding: 20px 40px; }
-        .logo { font-weight: 800; font-size: 1.4rem; cursor: pointer; color: var(--text-dark); text-decoration: none; }
-        nav { display: flex; gap: 20px; align-items: center; }
-        nav a { text-decoration: none; color: var(--text-dark); font-weight: 500; font-size: 0.9rem; }
-        .btn-outline { border: 1px solid #ddd; padding: 8px 16px; border-radius: 6px; transition: 0.2s; }
-        .btn-outline:hover { background: #f0f0f0; }
-        .btn-fill { background-color: var(--btn-orange); color: white; padding: 8px 16px; border-radius: 6px; border: none; font-weight: 600; cursor: pointer; transition: 0.2s; }
-        .btn-fill:hover { background-color: #d1502a; }
 
-        .hero { text-align: center; padding: 80px 20px; max-width: 800px; margin: auto; }
-        h1 { font-size: 3.5rem; letter-spacing: -1px; margin-bottom: 20px; }
-        .search-wrapper { background: var(--white); padding: 8px; border-radius: 8px; display: flex; box-shadow: 0 4px 12px rgba(0,0,0,0.05); border: 1px solid #e5e5e5; }
-        input { flex: 1; padding: 15px; border: none; font-size: 1rem; outline: none; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            background: var(--bg-gradient);
+            color: var(--text-main);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: var(--accent-glow);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Navbar Esmerilado Moderno */
+        header {
+            position: sticky;
+            top: 0;
+            width: 100%;
+            padding: 20px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(250, 249, 246, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            z-index: 100;
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 1.6rem;
+            letter-spacing: -1px;
+            color: var(--text-main);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-main);
+        }
+
+        /* Botones con animación controlada de elevación */
+        .btn {
+            padding: 12px 24px;
+            border-radius: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            border: none;
+            font-size: 0.95rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text-main);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-fill {
+            background: var(--brand-orange);
+            color: white;
+            box-shadow: 0 10px 20px -5px rgba(232, 95, 51, 0.3);
+        }
+
+        /* Animación: Sube al pasar el mouse, baja al salir */
+        .btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 25px -5px rgba(232, 95, 51, 0.4);
+        }
+        
+        .btn-outline:hover {
+            background: white;
+            box-shadow: 0 10px 20px -5px rgba(0,0,0,0.05);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        /* Hero Section */
+        .hero {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 100px 20px 60px 20px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            letter-spacing: -2px;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            background: linear-gradient(180deg, #0f172a 0%, #334155 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 48px auto;
+            line-height: 1.6;
+        }
+
+        /* Buscador Avanzado Estilo Groover */
+        .search-container {
+            background: white;
+            padding: 10px;
+            border-radius: 20px;
+            display: flex;
+            box-shadow: var(--card-shadow), 0 1px 3px rgba(0,0,0,0.02);
+            border: 1px solid rgba(0, 0, 0, 0.04);
+            max-width: 650px;
+            margin: 0 auto;
+            align-items: center;
+        }
+
+        .search-container:focus-within {
+            transform: translateY(-2px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.08);
+            border-color: rgba(232, 95, 51, 0.3);
+        }
+
+        .search-icon {
+            padding: 0 15px;
+            color: var(--text-muted);
+            font-size: 1.2rem;
+        }
+
+        .search-container input {
+            flex: 1;
+            border: none;
+            padding: 15px 5px;
+            font-size: 1.1rem;
+            outline: none;
+            color: var(--text-main);
+            background: transparent;
+        }
+
+        .search-container input::placeholder {
+            color: #94a3b8;
+        }
+
+        /* Grid de Recetas Populares */
+        .recipe-grid {
+            max-width: 1200px;
+            margin: 40px auto 100px auto;
+            padding: 0 4%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .recipe-card {
+            background: var(--glass-white);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 24px;
+            box-shadow: var(--card-shadow);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            cursor: pointer;
+        }
+
+        .recipe-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 30px 50px -10px rgba(0,0,0,0.08);
+            border-color: rgba(232, 95, 51, 0.2);
+        }
+
+        .recipe-tag {
+            align-self: flex-start;
+            background: rgba(232, 95, 51, 0.1);
+            color: var(--brand-orange);
+            padding: 6px 12px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .recipe-card h3 {
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        /* Sistema de Modales de Autenticación Modernos (Glassmorphism) */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.4);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .auth-card {
+            background: white;
+            padding: 40px;
+            border-radius: 32px;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+            border: 1px solid rgba(255,255,255,0.8);
+            text-align: center;
+            transform: scale(0.9);
+        }
+
+        .modal-overlay.active .auth-card {
+            transform: scale(1);
+        }
+
+        .auth-card h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 8px;
+        }
+
+        .auth-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 30px;
+        }
+
+        .input-group {
+            margin-bottom: 16px;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: var(--text-main);
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 14px 18px;
+            border-radius: 14px;
+            border: 1px solid #e2e8f0;
+            outline: none;
+            font-size: 1rem;
+            background: #f8fafc;
+        }
+
+        .input-group input:focus {
+            border-color: var(--brand-orange);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(232, 95, 51, 0.1);
+        }
+
+        .auth-btn {
+            width: 100%;
+            padding: 14px;
+            border-radius: 14px;
+            font-weight: 700;
+            font-size: 1rem;
+            margin-top: 10px;
+        }
+
+        .divider {
+            margin: 25px 0;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .divider::before, .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .divider:not(:empty)::before { margin-right: .5em; }
+        .divider:not(:empty)::after { margin-left: .5em; }
+
+        .btn-google-auth {
+            width: 100%;
+            background: white;
+            border: 1px solid #e2e8f0;
+            color: var(--text-main);
+            padding: 14px;
+            border-radius: 14px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-google-auth:hover {
+            background: #f8fafc;
+            transform: translateY(-2px);
+        }
+
+        .switch-auth {
+            margin-top: 25px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .switch-auth a {
+            color: var(--brand-orange);
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #f1f5f9;
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-weight: 700;
+            color: var(--text-muted);
+        }
     </style>
 </head>
 <body>
 
     <header>
-        <a href="index.html" class="logo">Delicias</a>
-        <nav>
-            <a href="#">Cómo funciona</a>
-            <a href="#">Recetas</a>
-            <a href="login.html" class="btn-outline">Log in</a>
-            <a href="register.html" class="btn-fill">Sign up</a>
+        <a href="#" class="logo">🍲 Delicias</a>
+        <nav class="nav-links">
+            <a href="#">Explorar</a>
+            <a href="#">Planes</a>
+            <a href="#" onclick="openModal('login')">Log in</a>
+            <a href="#" class="btn btn-fill" onclick="openModal('register')">Sign up</a>
         </nav>
     </header>
 
     <main class="hero">
-        <h1>Buscador de recetas</h1>
-        <p>Encuentra el equilibrio perfecto. Busca, cocina y disfruta.</p>
-        <div class="search-wrapper">
-            <input type="text" placeholder="¿Qué quieres cocinar hoy?">
-            <button class="btn-fill">Buscar</button>
+        <h1>Tu próximo plato<br>saludable empieza aquí.</h1>
+        <p>Inspirado en la simplicidad analítica. Introduce ingredientes o nombres de platos para calcular métricas de salud al instante.</p>
+        
+        <div class="search-container">
+            <span class="search-icon">🔍</span>
+            <input type="text" placeholder="Pega un ingrediente o busca una receta...">
+            <button class="btn btn-fill">Buscar</button>
         </div>
     </main>
 
+    <section class="recipe-grid">
+        <div class="recipe-card">
+            <div class="recipe-tag">⚡ Energizante</div>
+            <h3>Bowl de Quinoa y Aguacate</h3>
+            <p style="color: var(--text-muted); font-size: 0.95rem;">Alto en grasas saludables, carbohidratos complejos y listo en solo 15 minutos.</p>
+        </div>
+        <div class="recipe-card">
+            <div class="recipe-tag">🌱 Vegano</div>
+            <h3>Crema de Calabaza y Jengibre</h3>
+            <p style="color: var(--text-muted); font-size: 0.95rem;">Perfecta para cenas ligeras. Propiedades antiinflamatorias naturales.</p>
+        </div>
+        <div class="recipe-card">
+            <div class="recipe-tag">💪 Proteico</div>
+            <h3>Salmón al Horno con Hierbas</h3>
+            <p style="color: var(--text-muted); font-size: 0.95rem;">Cargado de Omega-3 de alta calidad y vegetales verdes al vapor.</p>
+        </div>
+    </section>
+
+    <div class="modal-overlay" id="loginModal">
+        <div class="auth-card" style="position: relative;">
+            <button class="close-modal" onclick="closeModal('login')">✕</button>
+            <h2>Bienvenido de vuelta</h2>
+            <p>Accede a tu panel nutricional personalizado</p>
+            
+            <div class="input-group">
+                <label>CORREO ELECTRÓNICO</label>
+                <input type="email" placeholder="tu@ejemplo.com">
+            </div>
+            <div class="input-group">
+                <label>CONTRASEÑA</label>
+                <input type="password" placeholder="••••••••">
+            </div>
+            
+            <button class="btn btn-fill auth-btn">Iniciar Sesión</button>
+            
+            <div class="divider">o continuar con</div>
+            
+            <button class="btn-google-auth" id="googleLoginBtn">
+                <img src="https://fonts.gstatic.com/s/i/productlogos/googleg/v6/web-24dp/copy_of_24dp.png" alt="Google" width="18">
+                Google
+            </button>
+            
+            <div class="switch-auth">
+                ¿Nuevo en Delicias? <a href="#" onclick="switchModal('login', 'register')">Regístrate gratis</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="registerModal">
+        <div class="auth-card" style="position: relative;">
+            <button class="close-modal" onclick="closeModal('register')">✕</button>
+            <h2>Crea tu cuenta</h2>
+            <p>Comienza a monitorear tu alimentación hoy</p>
+            
+            <div class="input-group">
+                <label>NOMBRE COMPLETO</label>
+                <input type="text" placeholder="Tu nombre">
+            </div>
+            <div class="input-group">
+                <label>CORREO ELECTRÓNICO</label>
+                <input type="email" placeholder="tu@ejemplo.com">
+            </div>
+            <div class="input-group">
+                <label>CONTRASEÑA</label>
+                <input type="password" placeholder="Mínimo 6 caracteres">
+            </div>
+            
+            <button class="btn btn-fill auth-btn">Crear Cuenta</button>
+            
+            <div class="divider">o registrarse con</div>
+            
+            <button class="btn-google-auth" id="googleRegisterBtn">
+                <img src="https://fonts.gstatic.com/s/i/productlogos/googleg/v6/web-24dp/copy_of_24dp.png" alt="Google" width="18">
+                Google
+            </button>
+            
+            <div class="switch-auth">
+                ¿Ya tienes cuenta? <a href="#" onclick="switchModal('register', 'login')">Inicia sesión</a>
+            </div>
+        </div>
+    </div>
+
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
         
         const firebaseConfig = {
             apiKey: "AIzaSyCEF-xaalZbKngtvVwBpc_PNeokHZr6Akc",
@@ -62,7 +520,44 @@
             appId: "1:818730627324:web:936f08109c4c70e7682779",
             measurementId: "G-PW7E9SKWNN"
         };
-        initializeApp(firebaseConfig);
+
+        // Inicializar Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
+
+        // Control de Modales Modernos en JavaScript Nativo
+        window.openModal = function(type) {
+            document.getElementById(`${type}Modal`).classList.add('active');
+        }
+
+        window.closeModal = function(type) {
+            document.getElementById(`${type}Modal`).classList.remove('active');
+        }
+
+        window.switchModal = function(closeType, openType) {
+            closeModal(closeType);
+            setTimeout(() => {
+                openModal(openType);
+            }, 300);
+        }
+
+        // Gestión de Autenticación con Google via PopUp
+        const handleGoogleAuth = async () => {
+            try {
+                const result = await signInWithPopup(auth, provider);
+                const user = result.user;
+                alert(`¡Bienvenido/a, ${user.displayName}! Sesión iniciada con éxito.`);
+                closeModal('login');
+                closeModal('register');
+            } catch (error) {
+                console.error("Error en autenticación: ", error.message);
+                alert("Hubo un problema al conectar con Google.");
+            }
+        };
+
+        document.getElementById('googleLoginBtn').addEventListener('click', handleGoogleAuth);
+        document.getElementById('googleRegisterBtn').addEventListener('click', handleGoogleAuth);
     </script>
 </body>
 </html>
