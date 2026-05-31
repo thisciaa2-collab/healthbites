@@ -2,27 +2,383 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Iniciar Sesión | Delicias</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍲</text></svg>">
+    <title>Acceso | Delicias</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
     <style>
-        body { font-family: sans-serif; background: #FAF9F6; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        .auth-card { background: white; padding: 40px; border-radius: 12px; width: 100%; max-width: 400px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
-        h2 { margin-bottom: 20px; text-align: center; }
-        input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; }
-        .btn { width: 100%; padding: 12px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; margin-top: 10px; }
-        .btn-google { background: #4285F4; color: white; }
-        .btn-main { background: #E85F33; color: white; }
-        .guest-link { text-align: center; margin-top: 15px; display: block; color: #666; font-size: 0.9rem; }
+        :root {
+            --bg-gradient: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --brand-orange: #E85F33;
+            --glass-white: rgba(255, 255, 255, 0.85);
+            --glass-border: rgba(255, 255, 255, 0.5);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            background: var(--bg-gradient);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        /* Enlace flotante para regresar */
+        .back-home {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 700;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            z-index: 10;
+        }
+
+        .back-home:hover {
+            transform: translateX(-3px);
+        }
+
+        /* Tarjeta Contenedora Principal */
+        .auth-container {
+            background: var(--glass-white);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            padding: 45px 40px;
+            border-radius: 32px;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 30px 60px rgba(15, 23, 42, 0.1);
+            text-align: center;
+            position: relative;
+        }
+
+        .auth-container h2 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            color: var(--text-main);
+            margin-bottom: 8px;
+        }
+
+        .auth-container p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 32px;
+        }
+
+        /* Campos de Entrada Formulario */
+        .form-group {
+            margin-bottom: 18px;
+            text-align: left;
+        }
+
+        /* Control dinámico para ocultar el campo de Nombre en modo Login */
+        .form-group.field-name {
+            max-height: 0;
+            margin-bottom: 0;
+            opacity: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        body.register-mode .form-group.field-name {
+            max-height: 100px;
+            margin-bottom: 18px;
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: var(--text-main);
+            letter-spacing: 0.5px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px 18px;
+            border-radius: 14px;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            outline: none;
+            font-size: 1rem;
+            background: rgba(255, 255, 255, 0.6);
+            color: var(--text-main);
+        }
+
+        .form-group input:focus {
+            border-color: var(--brand-orange);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(232, 95, 51, 0.15);
+        }
+
+        /* Botones con Microinteracciones Premium */
+        .btn {
+            width: 100%;
+            padding: 15px;
+            border-radius: 14px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .btn-submit {
+            background: var(--brand-orange);
+            color: white;
+            box-shadow: 0 10px 20px -5px rgba(232, 95, 51, 0.3);
+        }
+
+        /* Efecto controlado de elevación al pasar el mouse */
+        .btn-submit:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 25px -5px rgba(232, 95, 51, 0.4);
+        }
+
+        .btn-submit:active {
+            transform: translateY(0);
+        }
+
+        .divider {
+            margin: 24px 0;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .divider::before, .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+        }
+
+        .divider:not(:empty)::before { margin-right: .5em; }
+        .divider:not(:empty)::after { margin-left: .5em; }
+
+        .btn-google {
+            background: white;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            color: var(--text-main);
+            gap: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
+        }
+
+        .btn-google:hover {
+            background: #f8fafc;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .btn-google:active {
+            transform: translateY(0);
+        }
+
+        /* Enlaces de Intercambio */
+        .toggle-mode-container {
+            margin-top: 28px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .toggle-mode-container a {
+            color: var(--brand-orange);
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .toggle-mode-container a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
-    <div class="auth-card">
-        <h2>Iniciar Sesión</h2>
-        <input type="email" placeholder="Correo electrónico">
-        <input type="password" placeholder="Contraseña">
-        <button class="btn btn-main">Entrar</button>
-        <button class="btn btn-google">Continuar con Google</button>
-        <a href="register.html" class="guest-link">¿No tienes cuenta? Regístrate</a>
-        <a href="index.html" class="guest-link">Continuar como invitado</a>
+
+    <a href="index.html" class="back-home">← Volver al inicio</a>
+
+    <div class="auth-container">
+        <h2 id="authTitle">Bienvenido</h2>
+        <p id="authSubtitle">Ingresa tus credenciales para continuar</p>
+        
+        <form id="authForm" onsubmit="handleFormSubmit(event)">
+            <div class="form-group field-name">
+                <label>NOMBRE COMPLETO</label>
+                <input type="text" id="userName" placeholder="Tu nombre y apellido">
+            </div>
+
+            <div class="form-group">
+                <label>CORREO ELECTRÓNICO</label>
+                <input type="email" id="userEmail" required placeholder="tu@ejemplo.com">
+            </div>
+
+            <div class="form-group">
+                <label>CONTRASEÑA</label>
+                <input type="password" id="userPassword" required placeholder="••••••••">
+            </div>
+            
+            <button type="submit" class="btn btn-submit" id="mainSubmitBtn">Iniciar Sesión</button>
+        </form>
+        
+        <div class="divider">o usar plataformas</div>
+        
+        <button class="btn btn-google" id="googleAuthBtn">
+            <img src="https://fonts.gstatic.com/s/i/productlogos/googleg/v6/web-24dp/copy_of_24dp.png" alt="Google" width="18">
+            Continuar con Google
+        </button>
+        
+        <div class="toggle-mode-container">
+            <span id="toggleText">¿No tienes una cuenta?</span> 
+            <a href="#" id="toggleLink" onclick="switchMode(event)">Regístrate</a>
+        </div>
     </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { 
+            getAuth, 
+            signInWithEmailAndPassword, 
+            createUserWithEmailAndPassword, 
+            signInWithPopup, 
+            GoogleAuthProvider,
+            updateProfile 
+        } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
+        
+        const firebaseConfig = {
+            apiKey: "AIzaSyCEF-xaalZbKngtvVwBpc_PNeokHZr6Akc",
+            authDomain: "deliciasr-94715.firebaseapp.com",
+            projectId: "deliciasr-94715",
+            storageBucket: "deliciasr-94715.firebasestorage.app",
+            messagingSenderId: "818730627324",
+            appId: "1:818730627324:web:936f08109c4c70e7682779",
+            measurementId: "G-PW7E9SKWNN"
+        };
+
+        // Inicialización de Servicios
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const googleProvider = new GoogleAuthProvider();
+
+        // Variable de control del estado interno (login o register)
+        let isRegisterMode = false;
+
+        // Función JavaScript para alternar entre Login y Register de forma rápida sin cambiar de archivo
+        window.switchMode = function(e) {
+            e.preventDefault();
+            isRegisterMode = !isRegisterMode;
+            
+            const body = document.body;
+            const title = document.getElementById('authTitle');
+            const subtitle = document.getElementById('authSubtitle');
+            const submitBtn = document.getElementById('mainSubmitBtn');
+            const toggleText = document.getElementById('toggleText');
+            const toggleLink = document.getElementById('toggleLink');
+            const nameInput = document.getElementById('userName');
+
+            if (isRegisterMode) {
+                body.classList.add('register-mode');
+                title.textContent = "Crea tu cuenta";
+                subtitle.textContent = "Únete a Delicias y gestiona tu salud";
+                submitBtn.textContent = "Registrarse";
+                toggleText.textContent = "¿Ya tienes una cuenta?";
+                toggleLink.textContent = "Inicia sesión";
+                nameInput.setAttribute('required', 'true');
+            } else {
+                body.classList.remove('register-mode');
+                title.textContent = "Bienvenido";
+                subtitle.textContent = "Ingresa tus credenciales para continuar";
+                submitBtn.textContent = "Iniciar Sesión";
+                toggleText.textContent = "¿No tienes una cuenta?";
+                toggleLink.textContent = "Regístrate";
+                nameInput.removeAttribute('required');
+            }
+        }
+
+        // Manejo unificado de envío del formulario
+        window.handleFormSubmit = async function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('userEmail').value;
+            const password = document.getElementById('userPassword').value;
+            const name = document.getElementById('userName').value;
+
+            try {
+                if (isRegisterMode) {
+                    // Lógica de Registro en Firebase
+                    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                    // Actualizar el perfil del usuario con su nombre real
+                    await updateProfile(userCredential.user, { displayName: name });
+                    alert(`¡Cuenta creada con éxito! Bienvenido/a, ${name}`);
+                } else {
+                    // Lógica de Login en Firebase
+                    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                    alert(`¡Acceso correcto! Qué bueno verte de nuevo, ${userCredential.user.displayName || 'Usuario'}`);
+                }
+                // Redireccionar al buscador principal tras autenticación exitosa
+                window.location.href = "index.html";
+            } catch (error) {
+                console.error("Error procesando autenticación:", error.code);
+                handleAuthErrors(error.code);
+            }
+        }
+
+        // Proveedor de Autenticación Rápida con Google PopUp
+        document.getElementById('googleAuthBtn').addEventListener('click', async () => {
+            try {
+                const result = await signInWithPopup(auth, googleProvider);
+                alert(`Autenticación con Google exitosa. Bienvenido, ${result.user.displayName}`);
+                window.location.href = "index.html";
+            } catch (error) {
+                console.error("Error en Google Auth:", error.message);
+                alert("No se pudo completar el inicio de sesión con Google.");
+            }
+        });
+
+        // Manejador centralizado de errores para mejorar la experiencia del usuario
+        function handleAuthErrors(errorCode) {
+            switch (errorCode) {
+                case 'auth/email-already-in-use':
+                    alert('Este correo electrónico ya se encuentra registrado.');
+                    break;
+                case 'auth/wrong-password':
+                    alert('Contraseña incorrecta. Inténtalo de nuevo.');
+                    break;
+                case 'auth/user-not-found':
+                    alert('No se encontró ninguna cuenta con este correo.');
+                    break;
+                case 'auth/weak-password':
+                    alert('La contraseña es demasiado débil. Usa al menos 6 caracteres.');
+                    break;
+                default:
+                    alert('Ocurrió un error inesperado en el servidor de accesos.');
+            }
+        }
+    </script>
 </body>
 </html>
