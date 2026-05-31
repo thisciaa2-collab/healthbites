@@ -259,6 +259,7 @@
         </div>
     </div>
 
+    <!-- Integración Lógica Modular de Firebase Corregida para home.html -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
         import { 
@@ -285,10 +286,8 @@
         const auth = getAuth(app);
         const googleProvider = new GoogleAuthProvider();
 
-        // Variable de control del estado interno (login o register)
         let isRegisterMode = false;
 
-        // Función JavaScript para alternar entre Login y Register de forma rápida sin cambiar de archivo
         window.switchMode = function(e) {
             e.preventDefault();
             isRegisterMode = !isRegisterMode;
@@ -320,7 +319,7 @@
             }
         }
 
-        // Manejo unificado de envío del formulario
+        // Manejo unificado de envío del formulario con redirección a home.html
         window.handleFormSubmit = async function(e) {
             e.preventDefault();
             
@@ -330,37 +329,34 @@
 
             try {
                 if (isRegisterMode) {
-                    // Lógica de Registro en Firebase
                     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-                    // Actualizar el perfil del usuario con su nombre real
                     await updateProfile(userCredential.user, { displayName: name });
                     alert(`¡Cuenta creada con éxito! Bienvenido/a, ${name}`);
                 } else {
-                    // Lógica de Login en Firebase
                     const userCredential = await signInWithEmailAndPassword(auth, email, password);
                     alert(`¡Acceso correcto! Qué bueno verte de nuevo, ${userCredential.user.displayName || 'Usuario'}`);
                 }
-                // Redireccionar al buscador principal tras autenticación exitosa
-                window.location.href = "index.html";
+                // REDIRECCIÓN CORREGIDA A HOME
+                window.location.href = "home.html";
             } catch (error) {
                 console.error("Error procesando autenticación:", error.code);
                 handleAuthErrors(error.code);
             }
         }
 
-        // Proveedor de Autenticación Rápida con Google PopUp
+        // Proveedor de Autenticación con Google PopUp con redirección a home.html
         document.getElementById('googleAuthBtn').addEventListener('click', async () => {
             try {
                 const result = await signInWithPopup(auth, googleProvider);
                 alert(`Autenticación con Google exitosa. Bienvenido, ${result.user.displayName}`);
-                window.location.href = "index.html";
+                // REDIRECCIÓN CORREGIDA A HOME
+                window.location.href = "home.html";
             } catch (error) {
                 console.error("Error en Google Auth:", error.message);
                 alert("No se pudo completar el inicio de sesión con Google.");
             }
         });
 
-        // Manejador centralizado de errores para mejorar la experiencia del usuario
         function handleAuthErrors(errorCode) {
             switch (errorCode) {
                 case 'auth/email-already-in-use':
