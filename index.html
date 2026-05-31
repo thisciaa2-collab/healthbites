@@ -2,119 +2,27 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍲</text></svg>">
-    
-    <title>Delicias | Finder de Recetas</title>
+    <title>Iniciar Sesión | Delicias</title>
     <style>
-        :root {
-            --bg-cream: #FAF9F6;
-            --text-dark: #1f1f1f;
-            --btn-orange: #E85F33;
-            --white: #ffffff;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-cream);
-            color: var(--text-dark);
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        header {
-            width: 100%;
-            padding: 20px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-weight: 700;
-        }
-
-        .hero {
-            text-align: center;
-            padding: 80px 20px;
-            max-width: 800px;
-        }
-
-        h1 {
-            font-size: 3.5rem;
-            letter-spacing: -1px;
-            margin-bottom: 20px;
-            line-height: 1.1;
-        }
-
-        p {
-            font-size: 1.2rem;
-            color: #4a4a4a;
-            margin-bottom: 40px;
-        }
-
-        .search-wrapper {
-            background: var(--white);
-            padding: 8px;
-            border-radius: 8px;
-            display: flex;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            border: 1px solid #e5e5e5;
-        }
-
-        input {
-            flex: 1;
-            padding: 15px;
-            border: none;
-            font-size: 1rem;
-            outline: none;
-        }
-
-        button {
-            background-color: var(--btn-orange);
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 6px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        button:hover {
-            background-color: #d1502a;
-        }
-
-        .dark-section {
-            background-color: #212121;
-            color: white;
-            width: 100%;
-            padding: 60px 20px;
-            text-align: center;
-            margin-top: 100px;
-        }
+        body { font-family: sans-serif; background: #FAF9F6; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .auth-card { background: white; padding: 40px; border-radius: 12px; width: 100%; max-width: 400px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+        h2 { margin-bottom: 20px; text-align: center; }
+        input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; }
+        .btn { width: 100%; padding: 12px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; margin-top: 10px; }
+        .btn-google { background: #4285F4; color: white; }
+        .btn-main { background: #E85F33; color: white; }
+        .guest-link { text-align: center; margin-top: 15px; display: block; color: #666; font-size: 0.9rem; }
     </style>
 </head>
 <body>
-
-    <header>
-        <div>DELICIAS</div>
-    </header>
-
-    <main class="hero">
-        <h1>Buscador de recetas saludables</h1>
-        <p>Escribe el nombre de tu plato o ingredientes clave para encontrar la receta ideal. Perfecta para tu plan nutricional.</p>
-        
-        <div class="search-wrapper">
-            <input type="text" id="recipeSearch" placeholder="Buscar por receta o ingrediente...">
-            <button onclick="alert('Funcionalidad de búsqueda en construcción')">Buscar</button>
-        </div>
-    </main>
-
-    <section class="dark-section">
-        <h2>Delicias te conecta con una alimentación real</h2>
-        <p style="color: #a0a0a0;">Simplificamos tu cocina para que comas bien sin complicaciones.</p>
-    </section>
-
+    <div class="auth-card">
+        <h2>Iniciar Sesión</h2>
+        <input type="email" placeholder="Correo electrónico">
+        <input type="password" placeholder="Contraseña">
+        <button class="btn btn-main">Entrar</button>
+        <button class="btn btn-google">Continuar con Google</button>
+        <a href="register.html" class="guest-link">¿No tienes cuenta? Regístrate</a>
+        <a href="index.html" class="guest-link">Continuar como invitado</a>
+    </div>
 </body>
 </html>
