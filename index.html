@@ -3,130 +3,117 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Delicias | Cocina Saludable</title>
+    
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍲</text></svg>">
+    
+    <title>Delicias | Finder de Recetas</title>
     <style>
         :root {
-            --bg-color: #0f172a;
-            --text-color: #f8fafc;
-            --accent-color: #22c55e;
-            --card-bg: #1e293b;
+            --bg-cream: #FAF9F6;
+            --text-dark: #1f1f1f;
+            --btn-orange: #E85F33;
+            --white: #ffffff;
         }
 
         body {
-            font-family: 'Inter', -apple-system, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-cream);
+            color: var(--text-dark);
             margin: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-height: 100vh;
         }
 
         header {
             width: 100%;
-            padding: 2rem;
-            text-align: center;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             font-weight: 700;
-            letter-spacing: 1px;
         }
 
         .hero {
-            margin-top: 4rem;
-            width: 100%;
-            max-width: 600px;
             text-align: center;
-            padding: 0 1rem;
+            padding: 80px 20px;
+            max-width: 800px;
         }
 
-        h1 { font-size: 3.5rem; margin-bottom: 0.5rem; }
-        p { color: #94a3b8; margin-bottom: 2.5rem; font-size: 1.1rem; }
+        h1 {
+            font-size: 3.5rem;
+            letter-spacing: -1px;
+            margin-bottom: 20px;
+            line-height: 1.1;
+        }
 
-        .search-container {
-            background: var(--card-bg);
-            padding: 0.5rem;
-            border-radius: 12px;
+        p {
+            font-size: 1.2rem;
+            color: #4a4a4a;
+            margin-bottom: 40px;
+        }
+
+        .search-wrapper {
+            background: var(--white);
+            padding: 8px;
+            border-radius: 8px;
             display: flex;
-            gap: 10px;
-            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.3);
-            border: 1px solid #334155;
-            transition: border 0.3s ease;
-        }
-
-        .search-container:focus-within {
-            border-color: var(--accent-color);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border: 1px solid #e5e5e5;
         }
 
         input {
-            flex-grow: 1;
-            background: transparent;
+            flex: 1;
+            padding: 15px;
             border: none;
-            color: white;
-            padding: 0.8rem 1rem;
             font-size: 1rem;
             outline: none;
         }
 
         button {
-            background: var(--accent-color);
+            background-color: var(--btn-orange);
             color: white;
             border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 8px;
+            padding: 12px 30px;
+            border-radius: 6px;
             font-weight: 600;
             cursor: pointer;
-            transition: opacity 0.2s;
+            transition: background 0.2s;
         }
 
-        button:hover { opacity: 0.9; }
-
-        .features {
-            margin-top: 6rem;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            width: 80%;
-            max-width: 1000px;
-            padding-bottom: 4rem;
+        button:hover {
+            background-color: #d1502a;
         }
 
-        .card {
-            padding: 1.5rem;
-            border-left: 2px solid var(--accent-color);
-            background: rgba(30, 41, 59, 0.5);
-            border-radius: 0 8px 8px 0;
+        .dark-section {
+            background-color: #212121;
+            color: white;
+            width: 100%;
+            padding: 60px 20px;
+            text-align: center;
+            margin-top: 100px;
         }
     </style>
 </head>
 <body>
 
     <header>
-        DELICIAS
+        <div>DELICIAS</div>
     </header>
 
     <main class="hero">
-        <h1>Tu cocina consciente.</h1>
-        <p>Explora recetas saludables, simples y llenas de sabor.</p>
+        <h1>Buscador de recetas saludables</h1>
+        <p>Escribe el nombre de tu plato o ingredientes clave para encontrar la receta ideal. Perfecta para tu plan nutricional.</p>
         
-        <div class="search-container">
-            <input type="text" placeholder="¿Qué se te antoja hoy?">
-            <button>Buscar</button>
+        <div class="search-wrapper">
+            <input type="text" id="recipeSearch" placeholder="Buscar por receta o ingrediente...">
+            <button onclick="alert('Funcionalidad de búsqueda en construcción')">Buscar</button>
         </div>
     </main>
 
-    <section class="features">
-        <div class="card">
-            <h3>Nutrición</h3>
-            <p>Balance exacto para mantener tu energía durante todo el día.</p>
-        </div>
-        <div class="card">
-            <h3>Agilidad</h3>
-            <p>Recetas diseñadas para optimizar tu tiempo en la cocina.</p>
-        </div>
-        <div class="card">
-            <h3>Calidad</h3>
-            <p>Enfoque en ingredientes frescos y procesos naturales.</p>
-        </div>
+    <section class="dark-section">
+        <h2>Delicias te conecta con una alimentación real</h2>
+        <p style="color: #a0a0a0;">Simplificamos tu cocina para que comas bien sin complicaciones.</p>
     </section>
 
 </body>
